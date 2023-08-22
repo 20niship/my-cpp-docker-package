@@ -1,27 +1,23 @@
-FROM alpine:latest
+FROM debian:12-slim
 
-# setup timezone 
-# https://wiki.alpinelinux.org/wiki/Setting_the_timezone
-RUN apk --update add tzdata && \
-    cp /usr/share/zoneinfo/Asia/Tokyo /etc/localtime && \
-    apk del tzdata
+ENV TZ=Asia/Tokyo
+RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
+ENV DEBIAN_FRONTEND=noninteractive
 
-RUN apk --no-cache add \
-     python3 curl cmake ninja-build clang python3-dev py3-pip \
-     libxcursor-dev libxi-dev libxinerama-dev libxrandr-dev \
-     opencv-dev libx11-dev glfw glfw-dev glew-dev glm-dev freetype-dev \
-     zlib-dev curl-dev libcurl 
-RUN apk --no-cache add \
-     jsoncpp-dev 
-RUN apk --no-cache add \
-     libressl-dev 
-RUN apk --no-cache add \
-     eigen assimp-dev pcl lua5.4-dev fmt-dev jsoncpp-dev openssl zlib-dev 
-RUN apk --no-cache add \
-     pcl-dev boost-dev vtk vtk-dev eigen-dev mesa-dev mesa-gl 
-RUN apk --no-cache add \
-     --repository=https://dl-cdn.alpinelinux.org/alpine/edge/testing
+RUN apt update && \
+    apt install -y --no-install-recommends \
+    default-jdk python3-pip npm nodejs git cmake make wget lcov curl libfmt-dev libssl-dev
+RUN apt install -y --no-install-recommends \
+    mesa-vulkan-drivers libopencv-dev \
+    libglu1-mesa-dev libglfw3-dev libglew-dev libglm-dev \
+    libfreetype-dev libeigen3-dev libassimp-dev libpcl-dev liblua5.4-dev 
+
+RUN \
+  mkdir -p ~/.config/pip 
+RUN touch ~/.config/pip/pip.conf &&  \
+  echo "[global]" >> ~/.config/pip/pip.conf && \
+  echo "break-system-packages = true" >> ~/.config/pip/pip.conf
 
 RUN pip3 install --upgrade pip && \
-    pip3 install libclang toml colorlog libclang pyyaml open3d numpy
-
+    pip3 install libclang toml colorlog pyyaml numpy pybind11 && \
+    npm install -g yarn
