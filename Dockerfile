@@ -6,11 +6,16 @@ ENV DEBIAN_FRONTEND=noninteractive
 
 RUN apt update && \
     apt install -y --no-install-recommends \
-    default-jdk python3-pip npm nodejs git cmake make wget lcov curl libfmt-dev libssl-dev
+    default-jdk python3-pip npm nodejs git cmake make wget lcov curl libfmt-dev libssl-dev \
+    g++-12 gcc-12
 RUN apt install -y --no-install-recommends \
     mesa-vulkan-drivers libopencv-dev \
     libglu1-mesa-dev libglfw3-dev libglew-dev libglm-dev \
     libfreetype-dev libeigen3-dev libassimp-dev libpcl-dev liblua5.4-dev 
+
+ENV CXX=/usr/bin/g++-12 CC=/usr/bin/gcc-12
+RUN ln -s /usr/bin/g++-12 /usr/bin/g++ && \
+    ln -s /usr/bin/gcc-12 /usr/bin/gcc
 
 RUN \
   mkdir -p ~/.config/pip 
