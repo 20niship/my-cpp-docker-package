@@ -14,8 +14,9 @@ RUN apt install -y --no-install-recommends \
     libfreetype-dev libeigen3-dev libassimp-dev libpcl-dev liblua5.4-dev 
 
 ENV CXX=/usr/bin/g++-12 CC=/usr/bin/gcc-12
-RUN ln -s /usr/bin/g++-12 /usr/bin/g++ && \
-    ln -s /usr/bin/gcc-12 /usr/bin/gcc
+# RUN ln -s /usr/bin/g++-12 /usr/bin/g++ && \
+#     ln -s /usr/bin/gcc-12 /usr/bin/gcc
+RUN ln -s /usr/bin/g++-12 /usr/bin/g++
 
 RUN \
   mkdir -p ~/.config/pip 
