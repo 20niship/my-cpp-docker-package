@@ -39,3 +39,14 @@ RUN git clone https://github.com/drogonframework/drogon.git && \
     make install && \
     cd ../.. && \
     rm -rf drogon
+
+# build curlpp
+RUN git clone https://github.com/jpbarrette/curlpp.git && \
+    cd curlpp && \
+    mkdir build && \
+    cd build && \
+    cmake .. -DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED_LIBS=ON && \
+    make && \
+    make install && \
+    cd ../.. && \
+    rm -rf curlpp
