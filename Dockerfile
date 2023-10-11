@@ -27,4 +27,28 @@ RUN touch ~/.config/pip/pip.conf &&  \
 RUN pip3 install --upgrade pip && \
     pip3 install libclang toml colorlog pyyaml numpy pybind11 && \
     npm install -g yarn
+
+#  build drogon
+RUN git clone https://github.com/drogonframework/drogon.git && \
+    cd drogon && \
+    git submodule update --init && \
+    mkdir build && \
+    cd build && \
+    cmake .. -DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED_LIBS=ON && \
+    make && \
+    make install && \
+    cd ../.. && \
+    rm -rf drogon
+
+# build curlpp
+RUN git clone https://github.com/jpbarrette/curlpp.git && \
+    cd curlpp && \
+    mkdir build && \
+    cd build && \
+    cmake .. -DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED_LIBS=ON && \
+    make && \
+    make install && \
+    cd ../.. && \
+    rm -rf curlpp
+
 ENV LD_LIBRARY_PATH=/usr/local/lib:/usr/lib/x86_64-linux-gnu:$LD_LIBRARY_PATH
