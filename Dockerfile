@@ -27,3 +27,4 @@ RUN touch ~/.config/pip/pip.conf &&  \
 RUN pip3 install --upgrade pip && \
     pip3 install libclang toml colorlog pyyaml numpy pybind11 && \
     npm install -g yarn
+ENV LD_LIBRARY_PATH=/usr/local/lib:/usr/lib/x86_64-linux-gnu:$LD_LIBRARY_PATH
