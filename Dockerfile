@@ -11,7 +11,8 @@ RUN apt update && \
 RUN apt install -y --no-install-recommends \
     mesa-vulkan-drivers libopencv-dev \
     libglu1-mesa-dev libglfw3-dev libglew-dev libglm-dev \
-    libfreetype-dev libeigen3-dev libassimp-dev libpcl-dev liblua5.4-dev 
+    libfreetype-dev libeigen3-dev libassimp-dev libpcl-dev liblua5.4-dev \
+    libbullet-dev libopenal-dev libalut-dev libogg-dev ffmpeg libavcodec-dev libavformat-dev libavutil-dev libswscale-dev libavdevice-dev libffmpeg-nvenc-dev
 
 ENV CXX=/usr/bin/g++-12 CC=/usr/bin/gcc-12
 # RUN ln -s /usr/bin/g++-12 /usr/bin/g++ && \
@@ -35,7 +36,7 @@ RUN git clone https://github.com/drogonframework/drogon.git && \
     mkdir build && \
     cd build && \
     cmake .. -DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED_LIBS=ON && \
-    make && \
+    make -j10 && \
     make install && \
     cd ../.. && \
     rm -rf drogon
@@ -46,7 +47,7 @@ RUN git clone https://github.com/jpbarrette/curlpp.git && \
     mkdir build && \
     cd build && \
     cmake .. -DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED_LIBS=ON && \
-    make && \
+    make -j10 && \
     make install && \
     cd ../.. && \
     rm -rf curlpp
