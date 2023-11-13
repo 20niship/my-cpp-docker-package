@@ -12,7 +12,7 @@ RUN apt install -y --no-install-recommends \
     mesa-vulkan-drivers libopencv-dev \
     libglu1-mesa-dev libglfw3-dev libglew-dev libglm-dev \
     libfreetype-dev libeigen3-dev libassimp-dev libpcl-dev liblua5.4-dev \
-    libbullet-dev libopenal-dev libalut-dev libogg-dev ffmpeg libavcodec-dev libavformat-dev libavutil-dev libswscale-dev libavdevice-dev libffmpeg-nvenc-dev
+    libbullet-dev libopenal-dev libalut-dev libogg-dev ffmpeg libavcodec-dev libavformat-dev libavutil-dev libswscale-dev libavdevice-dev libffmpeg-nvenc-dev libccd-dev
 
 ENV CXX=/usr/bin/g++-12 CC=/usr/bin/gcc-12
 # RUN ln -s /usr/bin/g++-12 /usr/bin/g++ && \
