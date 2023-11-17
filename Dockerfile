@@ -10,7 +10,7 @@ RUN apt update && \
     g++-12 gcc-12
 RUN apt install -y --no-install-recommends \
     mesa-vulkan-drivers libopencv-dev \
-    libglu1-mesa-dev libglfw3-dev libglew-dev libglm-dev \
+    libglu1-mesa-dev libglfw3-dev libglew-dev libglm-dev ninja-build \
     libfreetype-dev libeigen3-dev libassimp-dev libpcl-dev liblua5.4-dev \
     libbullet-dev libopenal-dev libalut-dev libogg-dev ffmpeg libavcodec-dev libavformat-dev libavutil-dev libswscale-dev libavdevice-dev libffmpeg-nvenc-dev libccd-dev libfcl-dev
 
