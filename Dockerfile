@@ -52,4 +52,15 @@ RUN git clone https://github.com/jpbarrette/curlpp.git && \
     cd ../.. && \
     rm -rf curlpp
 
+# build pybind
+RUN git clone https://github.com/pybind/pybind11.git && \
+    cd pybind11 && \
+    mkdir build && \
+    cd build && \
+    cmake .. -DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED_LIBS=ON && \
+    make -j10 && \
+    make install && \
+    cd ../.. && \
+    rm -rf pybind11
+
 ENV LD_LIBRARY_PATH=/usr/local/lib:/usr/lib/x86_64-linux-gnu:$LD_LIBRARY_PATH
