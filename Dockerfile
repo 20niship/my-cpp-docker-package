@@ -4,6 +4,8 @@ ENV TZ=Asia/Tokyo
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 ENV DEBIAN_FRONTEND=noninteractive
 
+# RUN add-apt-repository ppa:ubuntu-toolchain-r/ppa -y
+RUN curl -fsSL https://deb.nodesource.com/setup_21.x | bash - 
 RUN apt update && \
     apt install -y --no-install-recommends \
     default-jdk python3-pip npm nodejs git cmake make wget lcov curl libfmt-dev libssl-dev \
@@ -11,12 +13,10 @@ RUN apt update && \
 RUN apt install -y --no-install-recommends \
     mesa-vulkan-drivers libopencv-dev \
     libglu1-mesa-dev libglfw3-dev libglew-dev libglm-dev ninja-build \
-    libfreetype-dev libeigen3-dev libassimp-dev libpcl-dev liblua5.4-dev \
-    libbullet-dev libopenal-dev libalut-dev libogg-dev ffmpeg libavcodec-dev libavformat-dev libavutil-dev libswscale-dev libavdevice-dev libffmpeg-nvenc-dev libccd-dev libfcl-dev
+    libfreetype-dev libeigen3-dev libassimp-dev libpcl-dev libbullet-dev libopenal-dev \
+    libalut-dev libogg-dev ffmpeg libavcodec-dev libavformat-dev libavutil-dev libswscale-dev libavdevice-dev libffmpeg-nvenc-dev 
 
 ENV CXX=/usr/bin/g++-12 CC=/usr/bin/gcc-12
-# RUN ln -s /usr/bin/g++-12 /usr/bin/g++ && \
-#     ln -s /usr/bin/gcc-12 /usr/bin/gcc
 RUN ln -s /usr/bin/g++-12 /usr/bin/g++
 
 RUN \
