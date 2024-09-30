@@ -72,7 +72,7 @@ RUN git clone https://github.com/20niship/mcut.git && \
     cd mcut && \
     mkdir build && \
     cd build && \
-    cmake .. -DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED_LIBS=ON && \
+    cmake .. -DCMAKE_BUILD_TYPE=Release  && \
     make -j10 && \
     make install && \
     cd ../.. && \
@@ -84,7 +84,7 @@ RUN git clone https://github.com/20niship/ifcplusplus.git  --depth=1 && \
     git checkout af7383984ca && \
     mkdir build && \
     cd build && \
-    cmake .. -DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED_LIBS=ON && \
+    cmake .. -DCMAKE_BUILD_TYPE=Release  && \
     make -j10 && \
     make install && \
     cd ../.. && \
