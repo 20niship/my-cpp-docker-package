@@ -16,6 +16,9 @@ RUN apt install -y --no-install-recommends \
     libfreetype-dev libeigen3-dev libassimp-dev libpcl-dev libbullet-dev libopenal-dev \
     libalut-dev libogg-dev ffmpeg libavcodec-dev libavformat-dev libavutil-dev libswscale-dev libavdevice-dev libffmpeg-nvenc-dev 
 
+# install opencascade
+RUN apt install -y xfonts-scalable libocct-data-exchange-dev libocct-draw-dev libocct-foundation-dev libocct-modeling-algorithms-dev libocct-modeling-data-dev libocct-ocaf-dev libocct-visualization-dev
+
 ENV CXX=/usr/bin/g++-12 CC=/usr/bin/gcc-12
 RUN ln -s /usr/bin/g++-12 /usr/bin/g++
 
@@ -29,6 +32,39 @@ RUN pip3 install --upgrade pip && \
     pip3 install libclang toml colorlog pyyaml numpy pybind11 && \
     npm install -g yarn
 
+# build curlpp
+RUN git clone https://github.com/jpbarrette/curlpp.git && \
+    cd curlpp && \
+    mkdir build && \
+    cd build && \
+    cmake .. -DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED_LIBS=ON && \
+    make -j10 && \
+    make install && \
+    cd ../.. && \
+    rm -rf curlpp
+
+# build mcut
+RUN git clone https://github.com/cutdigital/mcut.git && \
+    cd mcut && \
+    mkdir build && \
+    cd build && \
+    cmake .. -DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED_LIBS=ON && \
+    make -j10 && \
+    make install && \
+    cd ../.. && \
+    rm -rf mcut
+
+# build mcut
+RUN git clone https://github.com/20niship/ifcplusplus.git && \
+    cd ifcplusplus && \
+    mkdir build && \
+    cd build && \
+    cmake .. -DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED_LIBS=ON && \
+    make -j10 && \
+    make install && \
+    cd ../.. && \
+    rm -rf ifcplusplus
+
 #  build drogon
 RUN git clone https://github.com/drogonframework/drogon.git && \
     cd drogon && \
@@ -41,17 +77,6 @@ RUN git clone https://github.com/drogonframework/drogon.git && \
     cd ../.. && \
     rm -rf drogon
 
-# build curlpp
-RUN git clone https://github.com/jpbarrette/curlpp.git && \
-    cd curlpp && \
-    mkdir build && \
-    cd build && \
-    cmake .. -DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED_LIBS=ON && \
-    make -j10 && \
-    make install && \
-    cd ../.. && \
-    rm -rf curlpp
-
 # build pybind
 RUN git clone https://github.com/pybind/pybind11.git && \
     cd pybind11 && \
@@ -62,5 +87,10 @@ RUN git clone https://github.com/pybind/pybind11.git && \
     make install && \
     cd ../.. && \
     rm -rf pybind11
+
+
+# option(BUILD_CONSOLE_APPLICATION "Build an example CLI application" ON)
+# if (WIN32)
+# 	option(BUILD_VIEWER_APPLICATION "Build the viewer example application" ON)
 
 ENV LD_LIBRARY_PATH=/usr/local/lib:/usr/lib/x86_64-linux-gnu:$LD_LIBRARY_PATH
