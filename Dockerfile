@@ -54,17 +54,6 @@ RUN git clone https://github.com/cutdigital/mcut.git && \
     cd ../.. && \
     rm -rf mcut
 
-# build mcut
-RUN git clone https://github.com/20niship/ifcplusplus.git && \
-    cd ifcplusplus && \
-    mkdir build && \
-    cd build && \
-    cmake .. -DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED_LIBS=ON && \
-    make -j10 && \
-    make install && \
-    cd ../.. && \
-    rm -rf ifcplusplus
-
 #  build drogon
 RUN git clone https://github.com/drogonframework/drogon.git && \
     cd drogon && \
@@ -87,6 +76,19 @@ RUN git clone https://github.com/pybind/pybind11.git && \
     make install && \
     cd ../.. && \
     rm -rf pybind11
+
+
+# build ifcplusplus
+RUN git clone https://github.com/20niship/ifcplusplus.git  --depth=1 && \
+    cd ifcplusplus && \
+    git checkout ed099be6bc0b3 && \
+    mkdir build && \
+    cd build && \
+    cmake .. -DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED_LIBS=ON && \
+    make -j10 && \
+    make install && \
+    cd ../.. && \
+    rm -rf ifcplusplus
 
 
 # option(BUILD_CONSOLE_APPLICATION "Build an example CLI application" ON)
