@@ -43,16 +43,6 @@ RUN git clone https://github.com/jpbarrette/curlpp.git && \
     cd ../.. && \
     rm -rf curlpp
 
-# build mcut
-RUN git clone https://github.com/cutdigital/mcut.git && \
-    cd mcut && \
-    mkdir build && \
-    cd build && \
-    cmake .. -DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED_LIBS=ON && \
-    make -j10 && \
-    make install && \
-    cd ../.. && \
-    rm -rf mcut
 
 #  build drogon
 RUN git clone https://github.com/drogonframework/drogon.git && \
@@ -77,11 +67,21 @@ RUN git clone https://github.com/pybind/pybind11.git && \
     cd ../.. && \
     rm -rf pybind11
 
+# build mcut
+RUN git clone https://github.com/20niship/mcut.git && \
+    cd mcut && \
+    mkdir build && \
+    cd build && \
+    cmake .. -DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED_LIBS=ON && \
+    make -j10 && \
+    make install && \
+    cd ../.. && \
+    rm -rf mcut
 
 # build ifcplusplus
 RUN git clone https://github.com/20niship/ifcplusplus.git  --depth=1 && \
     cd ifcplusplus && \
-    git checkout ed099be6bc0b3 && \
+    git checkout af7383984ca && \
     mkdir build && \
     cd build && \
     cmake .. -DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED_LIBS=ON && \
