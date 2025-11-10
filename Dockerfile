@@ -10,7 +10,7 @@ RUN curl -fsSL https://deb.nodesource.com/setup_21.x | bash -
 RUN apt update && \
     apt install -y --no-install-recommends \
     default-jdk npm nodejs git cmake make wget lcov curl libfmt-dev libssl-dev \
-    g++-12 gcc-12 \
+    g++-14 gcc-14 \
     mesa-vulkan-drivers libopencv-dev \
     libglu1-mesa-dev libglfw3-dev libglew-dev libglm-dev ninja-build \
     libfreetype-dev libeigen3-dev libassimp-dev libpcl-dev libbullet-dev libopenal-dev \
@@ -20,8 +20,8 @@ RUN apt update && \
 # install opencascade
 RUN apt install -y xfonts-scalable libocct-data-exchange-dev libocct-draw-dev libocct-foundation-dev libocct-modeling-algorithms-dev libocct-modeling-data-dev libocct-ocaf-dev libocct-visualization-dev
 
-ENV CXX=/usr/bin/g++-12 CC=/usr/bin/gcc-12
-RUN ln -s /usr/bin/g++-12 /usr/bin/g++
+ENV CXX=/usr/bin/g++-14 CC=/usr/bin/gcc-14
+RUN ln -s /usr/bin/g++-14 /usr/bin/g++
 
 RUN \
   mkdir -p ~/.config/pip 
@@ -74,24 +74,11 @@ RUN git clone https://github.com/20niship/mcut.git && \
     cd mcut && \
     mkdir build && \
     cd build && \
-    cmake .. -DCMAKE_BUILD_TYPE=Release  && \
+    cmake .. -DCMAKE_BUILD_TYPE=Release -DMCUT_BUILD_TESTS=OFF -DMCUT_BUILD_TUTORIALS=OFF && \
     make -j10 && \
     make install && \
     cd ../.. && \
     rm -rf mcut
-
-# build ifcplusplus
-RUN git clone https://github.com/20niship/ifcplusplus.git  --depth=1 && \
-    cd ifcplusplus && \
-    git checkout af7383984ca && \
-    mkdir build && \
-    cd build && \
-    cmake .. -DCMAKE_BUILD_TYPE=Release  && \
-    make -j10 && \
-    make install && \
-    cd ../.. && \
-    rm -rf ifcplusplus
-
 
 # build mujoco
 RUN git clone https://github.com/google-deepmind/mujoco.git --depth=1 && \
@@ -104,6 +91,19 @@ RUN git clone https://github.com/google-deepmind/mujoco.git --depth=1 && \
     make install && \
     cd ../.. && \
     rm -rf mujoco
+
+# build ifcplusplus
+RUN git clone https://github.com/20niship/ifcplusplus.git  --depth=1 && \
+    cd ifcplusplus && \
+    git checkout 7362884 && \
+    mkdir build && \
+    cd build && \
+    cmake .. -DCMAKE_BUILD_TYPE=Release  && \
+    make -j10 && \
+    make install && \
+    cd ../.. && \
+    rm -rf ifcplusplus
+
 
 ENV LD_LIBRARY_PATH=/usr/local/lib:/usr/lib/x86_64-linux-gnu:$LD_LIBRARY_PATH
 
