@@ -18,7 +18,7 @@ RUN apt update && \
     libalut-dev libogg-dev ffmpeg libavcodec-dev libavformat-dev libavutil-dev libswscale-dev libavdevice-dev libffmpeg-nvenc-dev 
     
 # install opencascade
-RUN apt install -y xfonts-scalable libocct-data-exchange-dev libocct-draw-dev libocct-foundation-dev libocct-modeling-algorithms-dev libocct-modeling-data-dev libocct-ocaf-dev libocct-visualization-dev
+RUN apt install -y xfonts-scalable libocct-data-exchange-dev libocct-draw-dev libocct-foundation-dev libocct-modeling-algorithms-dev libocct-modeling-data-dev libocct-ocaf-dev libocct-visualization-dev  libxrandr-dev
 
 ENV CXX=/usr/bin/g++-14 CC=/usr/bin/gcc-14
 RUN ln -s /usr/bin/g++-14 /usr/bin/g++
@@ -46,17 +46,17 @@ RUN git clone https://github.com/jpbarrette/curlpp.git && \
     rm -rf curlpp
 
 
-#  build drogon
-RUN git clone https://github.com/drogonframework/drogon.git && \
-    cd drogon && \
-    git submodule update --init && \
-    mkdir build && \
-    cd build && \
-    cmake .. -DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED_LIBS=ON && \
-    make -j10 && \
-    make install && \
-    cd ../.. && \
-    rm -rf drogon
+# #  build drogon
+# RUN git clone https://github.com/drogonframework/drogon.git && \
+#     cd drogon && \
+#     git submodule update --init && \
+#     mkdir build && \
+#     cd build && \
+#     cmake .. -DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED_LIBS=ON && \
+#     make -j10 && \
+#     make install && \
+#     cd ../.. && \
+#     rm -rf drogon
 
 # build pybind
 RUN git clone https://github.com/pybind/pybind11.git && \
@@ -81,7 +81,7 @@ RUN git clone https://github.com/20niship/mcut.git && \
     rm -rf mcut
 
 # build mujoco
-RUN git clone https://github.com/google-deepmind/mujoco.git --depth=1 && \
+RUN git clone https://github.com/google-deepmind/mujoco.git && \
     cd mujoco && \
     git checkout 3.2.7 && \
     mkdir build && \
