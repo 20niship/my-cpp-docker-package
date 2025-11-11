@@ -18,7 +18,7 @@ RUN apt update && \
     libalut-dev libogg-dev ffmpeg libavcodec-dev libavformat-dev libavutil-dev libswscale-dev libavdevice-dev libffmpeg-nvenc-dev 
     
 # install opencascade
-RUN apt install -y xfonts-scalable libocct-data-exchange-dev libocct-draw-dev libocct-foundation-dev libocct-modeling-algorithms-dev libocct-modeling-data-dev libocct-ocaf-dev libocct-visualization-dev  libxrandr-dev
+RUN apt install -y xfonts-scalable libocct-data-exchange-dev libocct-draw-dev libocct-foundation-dev libocct-modeling-algorithms-dev libocct-modeling-data-dev libocct-ocaf-dev libocct-visualization-dev  libxrandr-dev libxrandr-dev libxinerama-dev libxcursor-dev libxi-dev
 
 ENV CXX=/usr/bin/g++-14 CC=/usr/bin/gcc-14
 RUN ln -s /usr/bin/g++-14 /usr/bin/g++
@@ -93,9 +93,10 @@ RUN git clone https://github.com/google-deepmind/mujoco.git && \
     rm -rf mujoco
 
 # build ifcplusplus
-RUN git clone https://github.com/20niship/ifcplusplus.git  --depth=1 && \
+RUN git clone https://github.com/20niship/ifcplusplus.git  && \
     cd ifcplusplus && \
-    git checkout 7362884 && \
+    # git checkout 7362884 && \
+    git checkout af7383984ca && \
     mkdir build && \
     cd build && \
     cmake .. -DCMAKE_BUILD_TYPE=Release  && \
