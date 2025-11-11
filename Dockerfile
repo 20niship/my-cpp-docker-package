@@ -15,10 +15,12 @@ RUN apt update && \
     libglu1-mesa-dev libglfw3-dev libglew-dev libglm-dev ninja-build \
     libfreetype-dev libeigen3-dev libassimp-dev libpcl-dev libbullet-dev libopenal-dev \
     python3.12-venv libpython3.12-dev python3.12 \ 
-    libalut-dev libogg-dev ffmpeg libavcodec-dev libavformat-dev libavutil-dev libswscale-dev libavdevice-dev libffmpeg-nvenc-dev 
-    
-# install opencascade
-RUN apt install -y xfonts-scalable libocct-data-exchange-dev libocct-draw-dev libocct-foundation-dev libocct-modeling-algorithms-dev libocct-modeling-data-dev libocct-ocaf-dev libocct-visualization-dev  libxrandr-dev libxrandr-dev libxinerama-dev libxcursor-dev libxi-dev
+    libalut-dev libogg-dev ffmpeg libavcodec-dev libavformat-dev libavutil-dev libswscale-dev libavdevice-dev libffmpeg-nvenc-dev  \
+    xfonts-scalable libocct-data-exchange-dev libocct-draw-dev libocct-foundation-dev libocct-modeling-algorithms-dev \
+    libocct-modeling-data-dev libocct-ocaf-dev libocct-visualization-dev  libxrandr-dev libxrandr-dev libxinerama-dev libxcursor-dev libxi-dev && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
+
 
 ENV CXX=/usr/bin/g++-14 CC=/usr/bin/gcc-14
 RUN ln -s /usr/bin/g++-14 /usr/bin/g++
@@ -31,8 +33,9 @@ RUN touch ~/.config/pip/pip.conf &&  \
 
 RUN curl -kL https://bootstrap.pypa.io/get-pip.py | python3.12 -
 RUN pip3 install --upgrade pip && \
-    pip3 install libclang toml colorlog pyyaml numpy pybind11 && \
-    npm install -g yarn
+    pip3 install --no-cache-dir  libclang toml colorlog pyyaml numpy pybind11 && \
+    npm install -g yarn  && \
+    npm cache clean --force
 
 # build curlpp
 RUN git clone https://github.com/jpbarrette/curlpp.git && \
