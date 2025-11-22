@@ -73,8 +73,10 @@ RUN git clone https://github.com/pybind/pybind11.git && \
     rm -rf pybind11
 
 # build mcut
+# tag: v1.3.0
 RUN git clone https://github.com/20niship/mcut.git && \
     cd mcut && \
+    git checkout 047d75f && \
     mkdir build && \
     cd build && \
     cmake .. -DCMAKE_BUILD_TYPE=Release -DMCUT_BUILD_TESTS=OFF -DMCUT_BUILD_TUTORIALS=OFF && \
